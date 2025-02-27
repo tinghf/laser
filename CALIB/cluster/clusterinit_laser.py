@@ -59,6 +59,7 @@ def init_cluster():
             client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       body=k8s_config)
+            logging.log(logging.DEBUG, f"RayCluster created. status={api_response}")
         else:
             utils.create_from_dict(k8s_client, k8s_config, namespace=namespace)
 
@@ -72,14 +73,15 @@ def delete_cluster():
             api_response = client.CustomObjectsApi().delete_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       name=k8s_config['metadata']['name'])
-            logging.log(logging.DEBUG, f"RayCluster created. status={api_response}")
+            logging.log(logging.DEBUG, f"RayCluster deleted. status={api_response}")
+"""         
         elif k8s_config['kind'] == "Service":
             k8s_client_instance.delete_namespaced_service(name=k8s_config['metadata']['name'], namespace=namespace)
         elif k8s_config['kind'] == "StatefulSet":
             k8s_client_apps_instance.delete_namespaced_stateful_set(name=k8s_config['metadata']['name'], namespace=namespace)
         elif k8s_config['kind'] == "Secret":
             k8s_client_instance.delete_namespaced_secret(name=k8s_config['metadata']['name'], namespace=namespace)
-
+ """
 
 def reset_ray_cluster():
     '''
@@ -99,7 +101,7 @@ def reset_ray_cluster():
             client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       body=k8s_config)
-action = "install" # "install", "delete", "reset"
+action = "delete" # "install", "delete", "reset"
 
 
 
