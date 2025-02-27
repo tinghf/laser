@@ -1,0 +1,3 @@
+kubernetes==32.0.1
+ray[default]==2.39
+optuna
