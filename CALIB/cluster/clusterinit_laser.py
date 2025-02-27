@@ -56,7 +56,7 @@ def init_cluster():
 
     for k8s_config in parsed_config:
         if k8s_config['kind'] == "RayCluster":
-            client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
+            api_response = client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       body=k8s_config)
             logging.log(logging.DEBUG, f"RayCluster created. status={api_response}")
@@ -101,7 +101,7 @@ def reset_ray_cluster():
             client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       body=k8s_config)
-action = "delete" # "install", "delete", "reset"
+action = "install" # "install", "delete", "reset"
 
 
 
