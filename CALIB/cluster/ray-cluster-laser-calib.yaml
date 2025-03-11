@@ -62,7 +62,7 @@ spec:
       spec:
         initContainers:
           - name: wait-for-database
-            image: postgres:16.4
+            image: mysql:8.0
             imagePullPolicy: IfNotPresent
             command:
             - /bin/sh
@@ -70,11 +70,11 @@ spec:
             - -e
             - -x
             - |
-              until pg_isready -U $(POSTGRES_USER) -h postgres -p 5432;
-              do echo "waiting for postgres"; sleep 2; done;
+              until mysqladmin ping -h mysql -u$(MYSQL_USER) -p$(MYSQL_PASSWORD);
+              do echo "waiting for mysql"; sleep 2; done;
             envFrom:
               - secretRef:
-                  name: postgres-secrets
+                  name: mysql-secrets
         containers:
         # The Ray head pod
         - name: ray-head
@@ -94,7 +94,7 @@ spec:
             name: client
           envFrom:
             - secretRef:
-                name: postgres-secrets
+                name: mysql-secrets
           env:
           - name: CPU_REQUEST
             valueFrom:
@@ -177,7 +177,7 @@ spec:
       spec:
         initContainers:
           - name: wait-for-database
-            image: postgres:16.4
+            image: mysql:8.0
             imagePullPolicy: IfNotPresent
             command:
             - /bin/sh
@@ -185,11 +185,11 @@ spec:
             - -e
             - -x
             - |
-              until pg_isready -U $(POSTGRES_USER) -h postgres -p 5432;
-              do echo "waiting for postgres"; sleep 2; done;
+              until mysqladmin ping -h mysql -u$(MYSQL_USER) -p$(MYSQL_PASSWORD);
+              do echo "waiting for mysql"; sleep 2; done;
             envFrom:
               - secretRef:
-                  name: postgres-secrets
+                  name: mysql-secrets
         containers:
         - name: ray-worker # must consist of lower case alphanumeric characters or '-', and must start and end with an alphanumeric character (e.g. 'my-name',  or '123-abc'
           # All Ray pods in the RayCluster should use the same version of Ray.
@@ -266,45 +266,46 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: postgres-secrets
+  name: mysql-secrets
 type: Opaque
 stringData:
-  POSTGRES_PASSWORD: "superSecretPassword"
-  POSTGRES_USER: "optuna"
-  POSTGRES_DB: "optunaDatabase"
+  MYSQL_ROOT_PASSWORD: "superSecretPassword"
+  MYSQL_USER: "optuna"
+  MYSQL_PASSWORD: "superSecretPassword"
+  MYSQL_DATABASE: "optunaDatabase"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: mysql
 spec:
   type: ClusterIP
   selector:
-    app: postgres
+    app: mysql
   ports:
-    - port: 5432
+    - port: 3306
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: mysql
   labels:
-    app: postgres
+    app: mysql
 spec:
   selector:
     matchLabels:
-      app: postgres
-  serviceName: postgres
+      app: mysql
+  serviceName: mysql
   template:
     metadata:
       labels:
-        app: postgres
+        app: mysql
     spec:
       volumes:
         - name: dshm
           emptyDir:
             medium: Memory
-        - name: postgres-storage
+        - name: mysql-storage
           persistentVolumeClaim:
             claimName: azure-managed-disk
       tolerations:
@@ -313,34 +314,33 @@ spec:
           value: "highcpu"
           effect: "NoSchedule"        
       containers:
-        - name: postgres
-          image: postgres:16.4
+        - name: mysql
+          image: mysql:8.0
           imagePullPolicy: IfNotPresent
           volumeMounts:
             - mountPath: /dev/shm
               name: dshm
-            - mountPath: /var/lib/postgresql/data
-              name: postgres-storage
-              subPath: postgres
-          args: ["-c", "max_connections=1000", "-c", "shared_buffers=2048MB", "-c", "logging_collector=on"]
+            - mountPath: /var/lib/mysql
+              name: mysql-storage
+              subPath: mysql
           envFrom:
             - secretRef:
-                name: postgres-secrets
+                name: mysql-secrets
           ports:
-            - containerPort: 5432
+            - containerPort: 3306
       nodeSelector:
         nodepool: highcpu            
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-exposed
+  name: mysql-exposed
 spec:
   selector:
-    app: postgres
+    app: mysql
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: 3306
+      targetPort: 3306
   type: LoadBalancer
 ---
 apiVersion: v1
