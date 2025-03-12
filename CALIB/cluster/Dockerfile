@@ -1,23 +1,41 @@
 # Use Rocky Linux as base
-# FROM rockylinux:9
+FROM rockylinux:9
 
 # Use the official Python image as the base image
-FROM python:3.12-slim
-
-# Install Python 3.12 and dependencies
-# RUN python3 -m ensurepip && \
-#    python3 -m pip install --upgrade pip
+# FROM python:3.12-slim
 
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install system dependencies
+RUN dnf update -y && \
+    dnf install -y epel-release && \
+    dnf install -y \
+    python3 \
+    python3-devel \
+    mariadb-connector-c-devel \
+    gcc \
+    gcc-c++ \
+    make \
+    wget \
+    screen \
+    procps \
+    vim \
+    git \
+    && dnf clean all
+
+# Upgrade pip
+RUN python3 -m ensurepip && \
+    python3 -m pip install --upgrade pip
+
+   
 # install system dependencies
 # Install system dependencies
-RUN apt-get update && apt-get install -y \
-    default-libmysqlclient-dev \
-    build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#     default-libmysqlclient-dev \
+#     build-essential \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Copy the requirements file and install dependencies
 COPY cluster/requirements.txt .
