@@ -22,7 +22,7 @@ def main(num_trials):
     storage = "mysql://{}:{}@mysql:3306/{}".format(
         os.environ["MYSQL_USER"],
         os.environ["MYSQL_PASSWORD"],
-        os.environ["MYSQL_DATABASE"]
+        os.environ["MYSQL_DB"]
     )
     study_name = "distributed_optuna"
     study = optuna.create_study(study_name=study_name, storage=storage, direction="minimize", load_if_exists=True)
