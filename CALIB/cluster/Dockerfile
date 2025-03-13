@@ -44,12 +44,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy your script into the container
 COPY laser.py .
 COPY params.json .
+COPY run.py .
 
 # Copy the Optuna script and the objective function module into the container
 COPY cluster/test_ray_remote_workers.py .
 COPY cluster/model.py .
 COPY cluster/check_study.sh .
-COPY cluster/run.py .
 
 
 # Run the script when the container starts
