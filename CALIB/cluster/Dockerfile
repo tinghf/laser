@@ -48,6 +48,7 @@ COPY params.json .
 # Copy the Optuna script and the objective function module into the container
 COPY cluster/test_ray_remote_workers.py .
 COPY cluster/model.py .
+COPY cluster/check_study.sh .
 
 
 # Run the script when the container starts
