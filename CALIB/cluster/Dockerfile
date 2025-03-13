@@ -49,6 +49,7 @@ COPY params.json .
 COPY cluster/test_ray_remote_workers.py .
 COPY cluster/model.py .
 COPY cluster/check_study.sh .
+COPY cluster/run.py .
 
 
 # Run the script when the container starts

@@ -33,7 +33,7 @@ spec:
           - -x
           - |
             optuna create-study --skip-if-exists --direction maximize \
-            --study-name "laser_on_aks" --storage \
+            --study-name "spatial_demo_calibration_on_aks" --storage \
             "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DB}"
           envFrom:
             - secretRef:
@@ -47,7 +47,7 @@ kind: Job
 metadata:
   name: worker
 spec:
-  parallelism: 5
+  parallelism: 3
   template:
     spec:
       restartPolicy: OnFailure
@@ -71,7 +71,7 @@ spec:
           image: idm-docker-staging.packages.idmod.org/laser/laser_calib:latest
           imagePullPolicy: IfNotPresent
           command:
-            - python
+            - python3
             - laser.py
           envFrom:
             - secretRef:
