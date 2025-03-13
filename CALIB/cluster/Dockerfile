@@ -45,6 +45,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY laser.py .
 COPY params.json .
 COPY run.py .
+COPY objective.py .
+COPY impatient.py .
 
 # Copy the Optuna script and the objective function module into the container
 COPY cluster/test_ray_remote_workers.py .
