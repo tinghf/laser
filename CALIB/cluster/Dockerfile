@@ -47,6 +47,8 @@ COPY params.json .
 COPY run.py .
 COPY objective.py .
 COPY impatient.py .
+COPY worker.py .
+COPY mysql_storage.py .
 
 # Copy the Optuna script and the objective function module into the container
 COPY cluster/test_ray_remote_workers.py .
@@ -55,4 +57,5 @@ COPY cluster/check_study.sh .
 
 
 # Run the script when the container starts
-# CMD ["python3", "laser.py"]
+#CMD ["python3", "laser.py", "-p", "shared/params.json", "-o", "shared/simulation_results.csv"]
+# CMD ["python3", "worker.py"]     # comment this out as we use cotainer command in manifest to launch   
