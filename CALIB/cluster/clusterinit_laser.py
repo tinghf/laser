@@ -103,7 +103,7 @@ def reset_ray_cluster():
             client.CustomObjectsApi().create_namespaced_custom_object(group="ray.io", version="v1alpha1",
                                                                       namespace=namespace, plural="rayclusters",
                                                                       body=k8s_config)
-action = "install" # "install", "delete", "reset"
+action = "delete" # "install", "delete", "reset"
 
 
 
