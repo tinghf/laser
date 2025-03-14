@@ -6,3 +6,4 @@ wget
 screen 
 laser-core
 tqdm
+scipy
