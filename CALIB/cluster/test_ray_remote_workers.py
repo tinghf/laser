@@ -18,12 +18,12 @@ def evaluate_trial(study_name, storage_url, trial_number):
 def main(num_trials):
     ray.init()  # Initialize Ray
 
-    # Set up Optuna study with a central storage in SQLite
-    storage = "postgresql://{}:{}@postgres:5432/{}".format(
-        os.environ["POSTGRES_USER"],
-        os.environ["POSTGRES_PASSWORD"],
-        # os.environ["POSTGRES_DB"],)  ToDo:  this should be defined as env in the pod spec, it's missing now so we just hardcode it for the timebeing
-        "optunaDatabase",)
+    # Set up Optuna study with a central storage in MySQL
+    storage = "mysql://{}:{}@mysql:3306/{}".format(
+        os.environ["MYSQL_USER"],
+        os.environ["MYSQL_PASSWORD"],
+        os.environ["MYSQL_DB"]
+    )
     study_name = "distributed_optuna"
     study = optuna.create_study(study_name=study_name, storage=storage, direction="minimize", load_if_exists=True)
 

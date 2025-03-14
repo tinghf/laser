@@ -14,7 +14,8 @@ name = "laser"                               # This name will be used for all po
 num_pods = 128                                     # The max number of pods to scale to. This should be the same as the # of configured pods from the self service tool
 docker_image_repo = "idm-docker-staging.packages.idmod.org" # IDM's artifactory server
 # docker_image = "rhull/rsvsim-ray-calibration"  # The docker image to be deployed to each pod.
-docker_image = "laser/laser_calib:jonathan"
+# docker_image = "laser/laser_calib:jonathan"
+docker_image = "laser/laser_calib:latest"
 
 ### END OF USER CONFIGS ###
 yaml_file = "cluster/ray-cluster-laser-calib.yaml"  # This is the kube config definition file
