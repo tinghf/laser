@@ -1,0 +1,8 @@
+{
+    "population_size": 500000,
+    "nodes": 20,
+    "timesteps": 500,
+    "initial_infected_fraction": 0.01,
+    "transmission_rate": 0.18678284058706085,
+    "migration_rate": 0.005292946619501252
+}
