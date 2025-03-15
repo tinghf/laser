@@ -23,9 +23,9 @@ storage_url = "mysql://{}:{}@mysql:3306/{}".format(
 study = optuna.load_study(
     # sampler=sampler,
     storage=storage_url,
-    study_name="spatial_demo_calibration_on_aks3"
+    study_name="spatial_demo_calibration_on_aks4"
 )
-study.optimize(objective, n_trials=25)  # n_trials is how many more trials; it will add to an existing study if it finds it in the db.
+study.optimize(objective, n_trials=2)  # n_trials is how many more trials; it will add to an existing study if it finds it in the db.
 
 
 # Print the best parameters

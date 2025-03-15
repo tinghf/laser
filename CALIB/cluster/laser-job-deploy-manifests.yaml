@@ -33,7 +33,7 @@ spec:
           - -x
           - |
             optuna create-study --skip-if-exists --direction minimize \
-            --study-name "spatial_demo_calibration_on_aks3" --storage \
+            --study-name "spatial_demo_calibration_on_aks4" --storage \
             "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DB}"
           envFrom:
             - secretRef:
@@ -47,7 +47,7 @@ kind: Job
 metadata:
   name: worker
 spec:
-  parallelism: 3
+  parallelism: 5
   template:
     spec:
       restartPolicy: OnFailure
