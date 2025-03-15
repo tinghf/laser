@@ -32,8 +32,8 @@ spec:
           - -e
           - -x
           - |
-            optuna create-study --skip-if-exists --direction maximize \
-            --study-name "spatial_demo_calibration_on_aks2" --storage \
+            optuna create-study --skip-if-exists --direction minimize \
+            --study-name "spatial_demo_calibration_on_aks3" --storage \
             "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DB}"
           envFrom:
             - secretRef:

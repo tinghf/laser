@@ -22,10 +22,8 @@ storage_url = "mysql://{}:{}@mysql:3306/{}".format(
 # optuna.delete_study(study_name="spatial_demo_calibr8n", storage=storage_url)
 study = optuna.load_study(
     # sampler=sampler,
-    direction="minimize",
     storage=storage_url,
-    study_name="spatial_demo_calibration_on_aks2",
-    load_if_exists=True,
+    study_name="spatial_demo_calibration_on_aks3"
 )
 study.optimize(objective, n_trials=25)  # n_trials is how many more trials; it will add to an existing study if it finds it in the db.
 
