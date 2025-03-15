@@ -31,5 +31,5 @@ study.optimize(objective, n_trials=2)  # n_trials is how many more trials; it wi
 # Print the best parameters
 print("Best parameters:", study.best_params)
 
-laser_script = Path("impatient.py").resolve(strict=True)
-subprocess.run([sys.executable, str(laser_script)], check=True)
+# laser_script = Path("impatient.py").resolve(strict=True)
+# subprocess.run([sys.executable, str(laser_script)], check=True)
