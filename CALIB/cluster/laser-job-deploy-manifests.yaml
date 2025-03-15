@@ -47,7 +47,7 @@ kind: Job
 metadata:
   name: worker
 spec:
-  parallelism: 5
+  parallelism: 8
   template:
     spec:
       restartPolicy: OnFailure
@@ -76,6 +76,11 @@ spec:
           envFrom:
             - secretRef:
                 name: mysql-secrets
+          resources:
+            requests:
+              cpu: "2"
+            limits:
+              cpu: "2"                
       imagePullSecrets:
         - name: idmodregcred3
 ---
