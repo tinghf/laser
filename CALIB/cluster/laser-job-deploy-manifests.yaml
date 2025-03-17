@@ -33,11 +33,14 @@ spec:
           - -x
           - |
             optuna create-study --skip-if-exists --direction minimize \
-            --study-name "spatial_demo_calibration_on_aks4" --storage \
+            --study-name "${STUDY_NAME}" --storage \
             "mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DB}"
           envFrom:
             - secretRef:
                 name: mysql-secrets
+          env:
+            - name: STUDY_NAME
+              value: "spatial_demo_calibration_on_aks4"        
       imagePullSecrets:
         - name: idmodregcred3
 
@@ -61,8 +64,11 @@ spec:
           - -e
           - -x
           - |
-            until [ `sh check_study.sh` -eq 0 ];
+            until [ `sh check_study.sh ${STUDY_NAME}` -eq 0 ];
             do echo "waiting for study"; sleep 2; done;
+          env:
+            - name: STUDY_NAME
+              value: "spatial_demo_calibration_on_aks4"            
           envFrom:
             - secretRef:
                 name: mysql-secrets
