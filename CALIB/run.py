@@ -7,6 +7,13 @@ import optuna
 from mysql_storage import get_storage_url
 from objective import objective
 
+# Get the study name from the command-line argument
+if len(sys.argv) < 2:
+    print("Usage: run.py <STUDY_NAME>")
+    sys.exit(1)
+
+study_name = sys.argv[1]
+
 # Run Optuna optimization
 # study = optuna.create_study(direction="minimize")
 # storage_url = get_storage_url()
@@ -23,7 +30,7 @@ storage_url = "mysql://{}:{}@mysql:3306/{}".format(
 study = optuna.load_study(
     # sampler=sampler,
     storage=storage_url,
-    study_name="spatial_demo_calibration_on_aks4"
+    study_name=study_name
 )
 study.optimize(objective, n_trials=2)  # n_trials is how many more trials; it will add to an existing study if it finds it in the db.
 

@@ -79,6 +79,7 @@ spec:
           command:
             - python3
             - run.py
+            - "${STUDY_NAME}"            
           envFrom:
             - secretRef:
                 name: mysql-secrets
