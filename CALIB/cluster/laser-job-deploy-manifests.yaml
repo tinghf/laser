@@ -38,9 +38,6 @@ spec:
           envFrom:
             - secretRef:
                 name: mysql-secrets
-          env:
-            - name: STUDY_NAME
-              value: "spatial_demo_calibration_on_aks4"        
       imagePullSecrets:
         - name: idmodregcred3
 
@@ -66,9 +63,6 @@ spec:
           - |
             until [ `sh check_study.sh ${STUDY_NAME}` -eq 0 ];
             do echo "waiting for study"; sleep 2; done;
-          env:
-            - name: STUDY_NAME
-              value: "spatial_demo_calibration_on_aks4"            
           envFrom:
             - secretRef:
                 name: mysql-secrets
