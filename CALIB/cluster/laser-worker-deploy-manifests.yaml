@@ -4,7 +4,8 @@ kind: Job
 metadata:
   name: worker
 spec:
-  parallelism: 8
+  ttlSecondsAfterFinished: 10
+  parallelism: 4
   template:
     spec:
       restartPolicy: OnFailure
