@@ -4,6 +4,7 @@ kind: Job
 metadata:
   name: study-creator
 spec:
+  ttlSecondsAfterFinished: 10
   template:
     spec:
       restartPolicy: OnFailure
