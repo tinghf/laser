@@ -274,7 +274,7 @@ stringData:
   MYSQL_ROOT_PASSWORD: "superSecretPassword"
   MYSQL_USER: "optuna"
   MYSQL_PASSWORD: "superSecretPassword"
-  MYSQL_DATABASE: "optunaDatabase"
+  MYSQL_DB: "optunaDatabase"
 ---
 apiVersion: v1
 kind: Service
