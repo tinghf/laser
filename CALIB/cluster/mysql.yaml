@@ -44,11 +44,6 @@ spec:
         - name: mysql-storage
           persistentVolumeClaim:
             claimName: azure-managed-disk-claim
-      tolerations:
-        - key: "nodepool"
-          operator: "Equal"
-          value: "highcpu"
-          effect: "NoSchedule"        
       containers:
         - name: mysql
           image: mysql:8.0
@@ -64,8 +59,7 @@ spec:
                 name: mysql-secrets
           ports:
             - containerPort: 3306
-      nodeSelector:
-        nodepool: highcpu            
+     
 ---
 apiVersion: v1
 kind: Service
