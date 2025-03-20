@@ -5,7 +5,7 @@ metadata:
   name: worker
 spec:
   ttlSecondsAfterFinished: 10
-  parallelism: 2
+  parallelism: 16
   template:
     spec:
       restartPolicy: OnFailure
@@ -37,8 +37,15 @@ spec:
                 name: mysql-secrets
           resources:
             requests:
-              cpu: "2"
+              cpu: "12"
             limits:
-              cpu: "2"                
+              cpu: "12"                
       imagePullSecrets:
         - name: idmodregcred3
+      tolerations:
+        - key: "nodepool"
+          operator: "Equal"
+          value: "highcpu"
+          effect: "NoSchedule"
+      nodeSelector:
+        nodepool: highcpu
