@@ -16,7 +16,9 @@ Contents
    example
    vdexample
    spatialexample
+   eula
    performance
+   calibration
    contributing
    authors
    changelog
